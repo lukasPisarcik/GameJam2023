@@ -100,26 +100,7 @@ class levelScene extends Phaser.Scene {
             console.log(gameOver);
             this.createGameOverPopup();
         }
-        else{
-
-        // Keeps slider in progressBarHorizontal
-        if (this.sliderHorizontal.x < 60) {
-            this.sliderHorizontal.emit('leftHorizontal');
-        } else if (this.sliderHorizontal.x > 140) {
-            this.sliderHorizontal.emit('rightHorizontal');
-        }
-        // Keeps slider in progressBarVertical
-        if (this.sliderVertical.y > 550) {
-            this.sliderVertical.emit('upVertical');
-        } else if (this.sliderVertical.y < 470) {
-            this.sliderVertical.emit('downVertical');
-        }
-        if(this.keys.A.isDown){   
-            // DEBUG PURPOSE ONLY      
-            // DELETE LATER     
-           this.player.x -= this.movementSpeed
-           this.directionFacing = "W"
-        }
+        
         // Vertical movement of sliderDot
         if (this.sliderDot.y > 774) {
             this.sliderDot.emit('up');
@@ -226,7 +207,7 @@ class levelScene extends Phaser.Scene {
         else{           
         }
 
-    }
+
        
 
     }
@@ -289,8 +270,10 @@ class levelScene extends Phaser.Scene {
                 for (let block of tile.id) {
                     block.y += this.jumpSpedUp;
                 }
-            });
-        }
+            }
+        });
+        }   
+        
     }
 
     moveUpTiles(){
