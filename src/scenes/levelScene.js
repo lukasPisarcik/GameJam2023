@@ -177,7 +177,7 @@ class levelScene extends Phaser.Scene {
                 // We use constant number
                 console.log(this.sliderDot.body.position.y)
                 // console.log(this.sliderDot.body.position.x)
-                const calculateVerticalPower = (770-this.sliderDot.body.position.y) / 15
+                const calculateVerticalPower = (770-this.sliderDot.body.position.y) / 10
                 this.jumpSpedUp = calculateVerticalPower
                 playerJumpedToSide = false;
                 // Making player jump
@@ -230,7 +230,7 @@ class levelScene extends Phaser.Scene {
         let sliderPosX = 150
         let sliderPosY = 700
         this.slider = this.physics.add.sprite(sliderPosX,sliderPosY,"sliderCross").setOrigin(0.5,0.5).setDisplaySize
-        (176,176)
+        (176,176).setDepth(998);
         this.slider.setCollideWorldBounds(false)
         this.slider.body.allowGravity = false
 
@@ -239,7 +239,7 @@ class levelScene extends Phaser.Scene {
         let sliderDotPosX = 150
         let sliderDotPosY = 774
         this.sliderDot = this.physics.add.sprite(sliderDotPosX,sliderDotPosY,"sliderDot").setOrigin(0.5,0.5).setDisplaySize
-        (25,25)
+        (25,25).setDepth(999);
         this.sliderDot.setCollideWorldBounds(false)
         this.sliderDot.body.allowGravity = false
 
