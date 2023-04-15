@@ -5,7 +5,7 @@ var gameOver= {
   };
 var score=0;
 var gameOverOverlay = false;
-var time= 0;
+var StartTime;
 
 
 class levelScene extends Phaser.Scene {
@@ -29,17 +29,17 @@ class levelScene extends Phaser.Scene {
         gameOver.reason=null;
         score=0;
         gameOverOverlay=false;
-        time = 0; // začiatočný čas
+        StartTime = new Date(); // začiatočný čas
 
         // Spustenie časovača každú sekundu
-        this.time.addEvent({
-          delay: 1,
-          callback: function() {
-            time++; // Inkrementujeme čas
-          },
-          callbackScope: this,
-          loop: true
-        });
+        // this.time.addEvent({
+        //   delay: 1,
+        //   callback: function() {
+        //     time++; // Inkrementujeme čas
+        //   },
+        //   callbackScope: this,
+        //   loop: true
+        // });
         
         // create repeating tile sprite for background
         const background = this.add.tileSprite(0, 0, this.cameras.main.width, this.cameras.main.height, this.level.mapName);
@@ -440,8 +440,14 @@ class levelScene extends Phaser.Scene {
     }
 
     createGameOverPopup(){
+        const timeDifference = new Date() - StartTime;
+        const secondsDifference = Math.floor(timeDifference / 1000);
+        const minutesDifference = Math.floor(secondsDifference / 60);
+
+        const totalScore = 5000 - secondsDifference + (score*10)
         const won = gameOver.reason === 'finish' ? true : false;
-        if (won) this.level.complete(3);
+        if (won) this.level.complete(totalScore);
+
         // need to change this it will display only once
         gameOverOverlay = true;
         // black overlay
@@ -462,7 +468,7 @@ class levelScene extends Phaser.Scene {
         .setFontFamily('Montserrat')
         .setFontStyle('900');
 
-        this.add.text(this.cameras.main.width/2, 470, score, {fontSize: '35px',color: '#ffffff',stroke: '#000000',strokeThickness: 8 })
+        this.add.text(this.cameras.main.width/2, 470, totalScore, {fontSize: '35px',color: '#ffffff',stroke: '#000000',strokeThickness: 8 })
         .setOrigin(0.5)
         .setFontFamily('Montserrat')
         .setFontStyle('900');
@@ -473,7 +479,7 @@ class levelScene extends Phaser.Scene {
         .setFontFamily('Montserrat')
         .setFontStyle('900');
 
-        this.add.text((this.cameras.main.width/2)-120, 560, '35:00', {fontSize: '20px',color: '#ffffff',stroke: '#000000',strokeThickness: 8 })
+        this.add.text((this.cameras.main.width/2)-120, 560, `${minutesDifference % 60} min, ${secondsDifference % 60} sec`, {fontSize: '20px',color: '#ffffff',stroke: '#000000',strokeThickness: 8 })
         .setOrigin(0.5)
         .setFontFamily('Montserrat')
         .setFontStyle('900');
@@ -485,7 +491,7 @@ class levelScene extends Phaser.Scene {
         .setFontFamily('Montserrat')
         .setFontStyle('900');
 
-        this.add.text((this.cameras.main.width/2)+120, 560, '9', {fontSize: '20px',color: '#ffffff',stroke: '#000000',strokeThickness: 8 })
+        this.add.text((this.cameras.main.width/2)+120, 560, score, {fontSize: '20px',color: '#ffffff',stroke: '#000000',strokeThickness: 8 })
         .setOrigin(0.5)
         .setFontFamily('Montserrat')
         .setFontStyle('900');

@@ -10,11 +10,17 @@ class Level {
         this.tileMap = tileMap
         this.completed = false;
         this.score = 0;
+        this.numStars = 0;
     }
   
     complete(score) {
       this.completed = true;
       this.score = score > this.score ? score : this.score;
+      // set number of starts
+      if (this.score > 4000) this.numStars = 3;
+      else if (this.score > 3000) this.numStars = 2;
+      else this.numStars = 1;
+
       // unlock next level
       if (levels[this.id + 1]){
         levels[this.id + 1].setUnlocked(true);
